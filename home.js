@@ -101,10 +101,9 @@ export default Home;
 
 function buttonPress(){
     Alert.alert('LED Switch Pressed');
-    //We want to change this from an IP ADDRESS to the
-    //mDNS of the server instead.
-    //
-    fetch(`http://${espIP}/toggle`);
+    
+    fetch(`http://${espIP}/toggle`)
+        .catch(err => Alert.alert('not connected to ESP'));
     
 }
 
