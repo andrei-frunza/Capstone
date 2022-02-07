@@ -3,32 +3,14 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert } from 'react-native';
 import Zeroconf from 'react-native-zeroconf';
 import { List, ListItem } from 'react-native-elements';
+import Login from './login'
 
 
-const zeroconf = new Zeroconf();
-espIP = new String;
+
 isConnected = new Boolean;
 isConnected = 0;
-
-zeroconf.on('resolved', service => {
-    if(JSON.stringify(service).includes('esp')){
-        console.log('it is here');
-        espIP = service.host;
-        isConnected = 1;
-        Alert.alert('The ESP has been found')
-    }
-})
-
-zeroconf.on('start', () => {
-    console.log('scan has started')
-})
-
-zeroconf.on('stop', () => {
-    console.log('scan has ended')
-    if(isConnected == 0){
-        Alert.alert('The ESP could not be found')
-    }
-})
+espIP = Login.espIP
+cookie = Login.cookie;
 
 const Home =(props) => {
     return(
@@ -53,15 +35,7 @@ const Home =(props) => {
                 title="LED Switch"
                 onPress={() => buttonPress()
             }/>
-            <Button
-                title="Start Up Our mDNS"
-                onPress={() => start()
-            }/>
-            <Button
-                title="Scan"
-                onPress={() => scan()
-            }/>
-            
+           
             
             
             
@@ -99,23 +73,24 @@ const styles = StyleSheet.create({
 
 export default Home;
 
-function buttonPress(){
+async function buttonPress(){
     Alert.alert('LED Switch Pressed');
     
-    fetch(`http://${espIP}/toggle`)
-        .catch(err => Alert.alert('not connected to ESP'));
+    await fetch(`http://${espIP}/toggle`,{
+    method: 'GET',
+    headers:{
+        'cookie': cookie
+    }}).catch(err => Alert.alert('not connected to ESP'));
     
 }
+//THE FUNCTION BELOW IS OBSOLETE, IT WAS JUST FOR TESTING PURPOSES
+//function scanJson(){
+//    fetch(`http://${espIP}/test`)
+//        .then((response) => (response.json())
+//        .then(data => console.log(data))
+//    ) 
+//        .catch((error) => {
+//            console.error(error);
+//         });
+//    }
 
-function start(){
-    zeroconf.publishService('http','tcp','local.','ourSERVER',80);
-    Alert.alert('has been started')
-}
-
-function scan(){
-    zeroconf.scan('http','tcp','local.')
-
-    setTimeout(function() {
-        zeroconf.stop();
-      }, 3000);
-}
