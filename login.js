@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput } from 'react-native';
+import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput, DevSettings } from 'react-native';
 import Zeroconf from 'react-native-zeroconf';
 
 const zeroconf = new Zeroconf();
 var user ;
 var pass ;
 var cookie;
+var design = false;
 
 
 zeroconf.on('resolved', service => {
@@ -33,6 +34,7 @@ zeroconf.on('stop', () => {
 const Login =({navigation}) => {
     return(
         <View style={styles.container}>
+   
             <Image 
             //The image from the URI only actually shows when 
             //i set a up here
@@ -78,7 +80,10 @@ const Login =({navigation}) => {
                 title="Scan for Charger"
                 onPress={() => scan()}
             />
-            
+            <Button
+                title="Designer Mode"
+                onPress={() => designer()}
+            />
             
         </View>
     );
@@ -129,6 +134,13 @@ function scan(){
 }
 
 async function sendJson(first, second){
+    //Designer Mode Overrides everything
+    if (design == true){
+        return true;
+    }
+
+
+
     let connecetionObject ={
         user: first,
         pass: second,
@@ -146,10 +158,16 @@ async function sendJson(first, second){
         console.error(error);
      });
     cookie=(res.headers.get("set-cookie"));
-    //consol log below tests that the cookie value has been set by the login
+    //console log below tests that the cookie value has been set by the login
     console.log(cookie);
 if(res.headers.has("set-cookie") == false){
     Alert.alert("Either Username of Pass is wrong.")
     return false;
 }else{return true;}
+}
+
+//Here as a developer feature
+function designer(){
+    design = true;
+    Alert.alert("Changed to Designer Mode");
 }

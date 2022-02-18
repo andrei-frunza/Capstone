@@ -1,53 +1,80 @@
-import { FadeOutToBottomAndroidSpec } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionSpecs';
-import React from 'react';
+import React, {useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert } from 'react-native';
-import Zeroconf from 'react-native-zeroconf';
-import { List, ListItem } from 'react-native-elements';
-import Login from './login'
+import Login from './login';
+import power from'./images/Power.png';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import hist from './images/hist.png';
+import set from './images/set.png';
 
 
 
-isConnected = new Boolean;
 isConnected = 0;
 espIP = Login.espIP
 cookie = Login.cookie;
 
 const Home =(props) => {
+            const navigation = useNavigation();
+            isConnected = new Boolean;
     return(
-        <View style={styles.container}>
-            <Image 
-            //The image from the URI only actually shows when 
-            //i set a up here
-               style={{width: 50, height: 50}}
-               source= {{
-                   uri:
-                    'https://reactnative.dev/img/tiny_logo.png'
-               }}
-            /> 
-            <Text style={styles.title}>LED Switch Test App</Text>
-            <Text style={styles.subtitle}>{props.username}</Text>
+    <View style={styles.container}>
+        <View style={styles.header}>
+            <Text style={styles.title}>Wireless Charger Controller</Text>
             <View style={styles.textcontainer}>
-                <Text style={styles.content}>
-                    {introText}
-                </Text>
-            </View>
-            <Button
-                title="LED Switch"
-                onPress={() => buttonPress()
-            }/>
-           
-            
-            
-            
-            
+            </View> 
         </View>
+        <TouchableOpacity onPress={() => buttonPress()}>
+            <Image  
+                style={{width: 200, height: 200}}
+                source= {power}
+            /> 
+        </TouchableOpacity>
+        <Text>Press to turn Charger on and off</Text>
+
+        <View style ={styles.spacing}>
+        <TouchableOpacity style={styles.button}
+        onPress={() => navigation.navigate("History")}>
+            <Text>Historical Use</Text>
+            <Image 
+               style={{width: 50, height: 50}}
+               source= {hist}
+            /> 
+        </TouchableOpacity>
+        </View>
+        <View style ={styles.spacing}>
+        <TouchableOpacity style={styles.button}
+        onPress={() => navigation.navigate("Settings")}>
+            <Text>Settings</Text>
+            <Image 
+               style={{width: 50, height: 50}}
+               source= {set}
+            /> 
+        </TouchableOpacity>
+        </View>
+    </View>
     );
 }
-
-const introText = `This is just a simple test to see if we can press the button from the app`;
-
 const styles = StyleSheet.create({
+    spacing: {
+        width:'50%',
+        padding:10,
+        alignItems:'center'
+    },
+    button: {
+        borderRadius: 10,
+        fontFamily:'Ubuntu-Bold',
+        alignItems:'center',
+        backgroundColor:'gray',
+        width:'80%',
+        flexDirection: 'row',
+        padding:10
+    },
     container: {
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    header: {
+        width: '100%',
         flexDirection: 'column',
         alignItems: 'center',
         padding: 20,
@@ -58,7 +85,9 @@ const styles = StyleSheet.create({
         paddingTop: 10
     },
     title: {
-        fontFamily: 'Ubuntu-Bold'
+        fontFamily: 'Ubuntu-Bold',
+        fontSize:25,
+        fontWeight:'bold'
     },
     subtitle: {
         fontFamily: 'Ubuntu-Regular',
