@@ -35,16 +35,7 @@ const Login =({navigation}) => {
     return(
         <View style={styles.container}>
    
-            <Image 
-            //The image from the URI only actually shows when 
-            //i set a up here
-               style={{width: 50, height: 50}}
-               source= {{
-                   uri:
-                    'https://reactnative.dev/img/tiny_logo.png'
-               }}
-            /> 
-            <Text style={styles.title}>Login page tester</Text>
+            <Text style={styles.title}>Login Page</Text>
 
             <View style={styles.loginBox}>
                 <Text>Please input Username and Password</Text>
@@ -103,7 +94,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     title: {
-        fontFamily: 'Ubuntu-Bold'
+        fontFamily: 'Ubuntu-Bold',
+        fontWeight:'bold',
+        fontSize:25
     },
     subtitle: {
         fontFamily: 'Ubuntu-Regular',
