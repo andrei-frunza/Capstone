@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput, DevSettings } from 'react-native';
 import Zeroconf from 'react-native-zeroconf';
+import Settings from './Settings';
 
 const zeroconf = new Zeroconf();
 var user ;

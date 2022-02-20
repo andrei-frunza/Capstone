@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import set from './images/set.png';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput, DevSettings } from 'react-native';
 
+export default function Settings({FontSize,changeSize}) {
+    
 
-const History =(props) => {
     return(
+        <View>
         <View style={styles.container}>
             <Image 
             //The image from the URI only actually shows when 
@@ -15,10 +17,18 @@ const History =(props) => {
             <Text style={styles.title}>Settings</Text>
             
         </View>
+
+        <Text style={[styles.text,{fontSize: FontSize}]}>Font Size Sample</Text>
+        <Button onPress={changeSize} title="Change Font Size"/>
+
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    text: {
+        textAlign:'center'
+    },
     container: {
         flexDirection: 'column',
         alignItems: 'center',
@@ -44,6 +54,3 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
-
-export default History;
-    

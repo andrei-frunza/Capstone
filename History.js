@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput, DevSettings } from 'react-native';
 import hist from './images/hist.png';
+import {Settings} from './Settings';
 
 
 const History =(props) => {

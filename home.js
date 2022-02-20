@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert } from 'react-native';
+import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert} from 'react-native';
 import Login from './login';
 import power from'./images/Power.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -10,12 +10,15 @@ import set from './images/set.png';
 
 
 isConnected = 0;
-espIP = Login.espIP
+espIP = Login.espIP;
 cookie = Login.cookie;
 
-const Home =(props) => {
+const Home =({FontSize}) => {
             const navigation = useNavigation();
             isConnected = new Boolean;
+
+            
+            
     return(
     <View style={styles.container}>
         <View style={styles.header}>
@@ -29,7 +32,7 @@ const Home =(props) => {
                 source= {power}
             /> 
         </TouchableOpacity>
-        <Text>Press to turn Charger on and off</Text>
+        <Text style={[styles.text,{fontSize: FontSize}]}>Press to turn Charger on and off</Text>
 
         <View style ={styles.spacing}>
         <TouchableOpacity style={styles.button}
@@ -55,6 +58,9 @@ const Home =(props) => {
     );
 }
 const styles = StyleSheet.create({
+    text: {
+        textAlign:'center'
+    },
     spacing: {
         width:'50%',
         padding:10,
@@ -105,11 +111,13 @@ export default Home;
 async function buttonPress(){
     Alert.alert('LED Switch Pressed');
     
-    await fetch(`http://${espIP}/toggle`,{
+    const res = await fetch(`http://${espIP}/toggle`,{
     method: 'GET',
     headers:{
         'cookie': cookie
     }}).catch(err => Alert.alert('not connected to ESP'));
+
+    ChargeCheck();
     
 }
 //THE FUNCTION BELOW IS OBSOLETE, IT WAS JUST FOR TESTING PURPOSES
@@ -122,4 +130,3 @@ async function buttonPress(){
 //            console.error(error);
 //         });
 //    }
-
