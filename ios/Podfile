@@ -12,6 +12,10 @@ target 'capstone' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-battery', :path => '../node_modules/react-native-battery'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
   target 'capstoneTests' do
     inherit! :complete
     # Pods for testing

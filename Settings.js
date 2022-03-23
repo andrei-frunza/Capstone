@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import set from './images/set.png';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput, DevSettings } from 'react-native';
 
-export default function Settings({FontSize,changeSize}) {
+export default function Settings({FontSize,changeSize,bgColor,changeColor,textColor}) {
     
 
     return(
-        <View>
+        <View style={[styles.background,{backgroundColor:bgColor}]}>
         <View style={styles.container}>
             <Image 
             //The image from the URI only actually shows when 
@@ -18,14 +18,18 @@ export default function Settings({FontSize,changeSize}) {
             
         </View>
 
-        <Text style={[styles.text,{fontSize: FontSize}]}>Font Size Sample</Text>
+        <Text style={[styles.text,{fontSize: FontSize, color:textColor}]}>Font Size Sample</Text>
         <Button onPress={changeSize} title="Change Font Size"/>
+        <Button onPress={changeColor} title="Change Background color"/>
 
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex:1
+    },
     text: {
         textAlign:'center'
     },

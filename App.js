@@ -13,6 +13,8 @@ const Stack = createStackNavigator();
 const App = () => {
 
   const [FontSize,setFontSize]=useState(20);
+  const [bgColor, setBG]=useState('white')
+  const [textColor,setText]=useState('black')
 
   const changeSize=()=>{
         
@@ -25,6 +27,21 @@ const App = () => {
         
     }
     return(FontSize)
+}
+
+const changeColor=()=>{
+        
+  if(bgColor=='black'){
+      setBG('white');
+      setText('black');
+      
+  }
+  else{
+      setBG('black');
+      setText('gray');
+      
+  }
+  return(FontSize)
 }
   
   return ( 
@@ -40,7 +57,7 @@ const App = () => {
              options={{
                headerShown: false
              }}>
-               {(props) => <Login {...props} />}
+               {(props) => <Login {...props} bgColor={bgColor} FontSize={FontSize} textColor={textColor} />}
             </Stack.Screen>
 
             <Stack.Screen
@@ -48,23 +65,23 @@ const App = () => {
              options={{
                headerShown: false
              }}>
-               {(props) => <Home {...props} FontSize={FontSize} />}
+               {(props) => <Home {...props} bgColor={bgColor} FontSize={FontSize} textColor={textColor} />}
             </Stack.Screen>
 
             <Stack.Screen
              name = 'History'
              options={{
                headerShown: false
-             }}
-             component={History}
-             />
+             }}>
+               {(props) => <History {...props} bgColor={bgColor} FontSize={FontSize} textColor={textColor} />}
+            </Stack.Screen>
 
             <Stack.Screen
              name = 'Settings'
              options={{
                headerShown: false
              }}>
-               {(props) => <Settings {...props} changeSize={changeSize} FontSize={FontSize} />}
+               {(props) => <Settings {...props} changeSize={changeSize} changeColor={changeColor} bgColor={bgColor} FontSize={FontSize} textColor={textColor} />}
             </Stack.Screen>
              
 

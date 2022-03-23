@@ -1,25 +1,51 @@
 import React, {useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert} from 'react-native';
+import { NativeModules, View, Image, Text, StyleSheet, backgroundColor, Button, Alert, NativeEventEmitter, AppRegistry} from 'react-native';
 import Login from './login';
 import power from'./images/Power.png';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import hist from './images/hist.png';
 import set from './images/set.png';
-
-
+import DeviceInfo, {useBatteryLevel} from 'react-native-device-info';
 
 isConnected = 0;
 espIP = Login.espIP;
 cookie = Login.cookie;
 
-const Home =({FontSize}) => {
+class Battery extends React.Component {
+    state = {
+        batteryLevel:null,
+    };
+
+    componentDidMount = () => {
+        const deviceInfoEmitter = new NativeEventEmitter(NativeModules.RNDeviceInfo);
+
+        DeviceInfo.getBatteryLevel().then((batteryLevel) => {
+           console.log(batteryLevel);
+           this.setState({batteryLevel});
+         });
+         this._subscription = deviceInfoEmitter.addListener('RNDeviceInfo_batteryLevelDidChange', (batteryLevel) => {
+            this.setState({ batteryLevel });
+            console.log('batteryLevel changed!', batteryLevel);
+          });
+   }
+
+    render(){
+        return <Text>Battery Level: {parseFloat(this.state.batteryLevel).toFixed(2) * 100 + '%'} </Text>
+    }
+
+}
+
+
+
+
+const Home =({FontSize,bgColor,textColor}) => {
             const navigation = useNavigation();
             isConnected = new Boolean;
 
             
-            
     return(
+    <View style={[styles.background,{backgroundColor: bgColor}]}>
     <View style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.title}>Wireless Charger Controller</Text>
@@ -32,7 +58,7 @@ const Home =({FontSize}) => {
                 source= {power}
             /> 
         </TouchableOpacity>
-        <Text style={[styles.text,{fontSize: FontSize}]}>Press to turn Charger on and off</Text>
+        <Text style={[styles.text,{fontSize: FontSize, color: textColor}]}>Press to turn Charger on and off</Text>
 
         <View style ={styles.spacing}>
         <TouchableOpacity style={styles.button}
@@ -53,11 +79,17 @@ const Home =({FontSize}) => {
                source= {set}
             /> 
         </TouchableOpacity>
+
+        <Battery/>
         </View>
+    </View>
     </View>
     );
 }
 const styles = StyleSheet.create({
+    background :{
+        flex:1
+    },
     text: {
         textAlign:'center'
     },
@@ -120,6 +152,8 @@ async function buttonPress(){
     ChargeCheck();
     
 }
+
+AppRegistry.registerComponent('RCTBattery', () => RCTBattery);
 //THE FUNCTION BELOW IS OBSOLETE, IT WAS JUST FOR TESTING PURPOSES
 //function scanJson(){
 //    fetch(`http://${espIP}/test`)

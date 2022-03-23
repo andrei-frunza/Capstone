@@ -32,8 +32,9 @@ zeroconf.on('stop', () => {
 })
 
 
-const Login =({navigation}) => {
+const Login =({navigation,bgColor,textColor}) => {
     return(
+        <View style={[styles.background,{backgroundColor: bgColor}]}>
         <View style={styles.container}>
    
             <Text style={styles.title}>Login Page</Text>
@@ -43,7 +44,7 @@ const Login =({navigation}) => {
                 <View>
                     <Text>Username:</Text>
                     <TextInput 
-                    style={styles.input}
+                    style={[styles.input,{backgroundColor:bgColor,color: textColor}]}
                     placeholder="username..."  
                     onChangeText={(val) => user = val}
                     />
@@ -51,7 +52,7 @@ const Login =({navigation}) => {
                 <View>
                     <Text>Password:</Text>
                     <TextInput 
-                    style={styles.input}
+                    style={[styles.input,{backgroundColor:bgColor,color: textColor}]}
                     placeholder="password..." 
                     onChangeText={(val) => pass = val}  
                     />
@@ -78,15 +79,19 @@ const Login =({navigation}) => {
             />
             
         </View>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex:1
+    },
     container: {
         flexDirection: 'column',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: 'cornflowerblue' 
+        backgroundColor: 'cornflowerblue'
     },
     body:{
         flexDirection: 'column',
