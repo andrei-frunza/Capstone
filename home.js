@@ -8,9 +8,11 @@ import hist from './images/hist.png';
 import set from './images/set.png';
 import DeviceInfo, {useBatteryLevel} from 'react-native-device-info';
 
+
 isConnected = 0;
 espIP = Login.espIP;
 cookie = Login.cookie;
+
 
 class Battery extends React.Component {
     state = {
@@ -39,9 +41,13 @@ class Battery extends React.Component {
 
 
 
+
+
 const Home =({FontSize,bgColor,textColor}) => {
             const navigation = useNavigation();
             isConnected = new Boolean;
+
+        
 
             
     return(
@@ -52,7 +58,7 @@ const Home =({FontSize,bgColor,textColor}) => {
             <View style={styles.textcontainer}>
             </View> 
         </View>
-        <TouchableOpacity onPress={() => buttonPress()}>
+        <TouchableOpacity onPress={() =>{ buttonPress(),timePressed=Date()}}>
             <Image  
                 style={{width: 200, height: 200}}
                 source= {power}
@@ -79,9 +85,9 @@ const Home =({FontSize,bgColor,textColor}) => {
                source= {set}
             /> 
         </TouchableOpacity>
-
         <Battery/>
-        </View>
+       
+    </View>
     </View>
     </View>
     );
@@ -147,9 +153,14 @@ async function buttonPress(){
     method: 'GET',
     headers:{
         'cookie': cookie
-    }}).catch(err => Alert.alert('not connected to ESP'));
-
-    ChargeCheck();
+    }}).catch((err) =>{
+     Alert.alert('not connected to ESP');
+     console.log(err)
+    })
+    
+}
+//Testing to see
+function rateOfCharge(){
     
 }
 

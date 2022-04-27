@@ -1,10 +1,39 @@
 import React, {useState} from 'react';
 import { View, Image, Text, StyleSheet, backgroundColor, Button, Alert,TextInput, DevSettings } from 'react-native';
 import hist from './images/hist.png';
-import {Settings} from './Settings';
+import Home from './home';
+
+timePressed=Home.timePressed;
+
+const History =({props,textColor,bgColor,buffer}) => {
+
+    //The class will take the current time and subtract the time that the charger has been running to
+    //generate a start time
+    class ChargeTime extends React.Component {
+
+        state = {
+            time:null,
+            date:null
+        };
+    
+    componentDidMount(){
+        this.setState({time:buffer,date:Date()})
+
+    }
+
+        render(){
+            return(
+            <View>
+                <Text>Date: {this.state.date}</Text>
+                <Text>Charge Time: {this.state.time} </Text>
+            </View>
+            )
+    }}
 
 
-const History =({props,textColor,bgColor}) => {
+
+
+
     return(
         <View style={[styles.background,{backgroundColor: bgColor}]}>
         <View style={styles.container}>
@@ -17,6 +46,7 @@ const History =({props,textColor,bgColor}) => {
             <Text style={styles.title}>Historical Use</Text>
             
         </View>
+        <ChargeTime/>
         </View>
     );
 }
