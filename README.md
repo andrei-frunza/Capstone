@@ -8,5 +8,6 @@ The phone application makes HTTP requests to an ESP8266 Web Server on the same l
 
 The phone application detects the ESP8266 on the local network using Zeroconf, similar to how printers connect to devices on the same network. The ESP8266 outputs an mDNS (Multicast DNS) which is a static string. In this case, "esp8266.local". The phone application searches for this mDNS using an added zeroconf node, and once it finds it, obtains the IP address of the ESP8266.
 ![alt text](https://github.com/andrei-frunza/Capstone/blob/main/images/app.JPG?raw=true)
+![alt text](https://github.com/andrei-frunza/Capstone/blob/main/images/display.JPG?raw=true)
 
 Zeroconf will not work on emulators, only physical devices.
