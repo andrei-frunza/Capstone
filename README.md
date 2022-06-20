@@ -11,3 +11,6 @@ The phone application detects the ESP8266 on the local network using Zeroconf, s
 ![alt text](https://github.com/andrei-frunza/Capstone/blob/main/images/display.JPG?raw=true)
 
 Zeroconf will not work on emulators, only physical devices.
+
+# Read More
+For more information on the article, refer to the [the following linkedin article](https://www.linkedin.com/pulse/design-wireless-intelligent-mobile-charger-andrei-frunza/?trackingId=DQ4FO8p3S9mGnDV7%2BTI0sw%3D%3D)
